@@ -1,12 +1,14 @@
 import express, { Router } from "express";
-import authRoutes from "./auth";
-import folderRoutes from "./folder";
-import fileRoutes from "./file";
+import authRouter from "./auth";
+import folderRouter from "./folder";
+import fileRouter from "./file";
+import adminRouter from "./admin";
 
 const router: Router = express.Router();
 
-router.use("/auth", authRoutes);
-router.use("/folder", folderRoutes);
-router.use("/file", fileRoutes);
+router.use("/auth", authRouter);
+router.use("/folder", folderRouter);
+router.use("/file", fileRouter);
+router.use("/admin", adminRouter)
 
 export default router;

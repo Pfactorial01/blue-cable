@@ -15,7 +15,7 @@ const login = async (req: Request, res: Response) => {
         }
     })
     if (!user) {
-        return res.status(400).json({ message: "user not found" });
+        return res.status(404).json({ message: "user not found" });
     }
     if (user) {
         const isMatch = await compare(password, user.password);
@@ -24,7 +24,7 @@ const login = async (req: Request, res: Response) => {
             req.session.isAuth = true;
             // @ts-ignore
             req.session.userId = user.id;
-            return res.status(200).json({ message: "success" });
+            return res.status(200).json({ message: "success", userId: user.id });
         } else {
             return res.status(400).json({ message: "password incorrect" });
         }

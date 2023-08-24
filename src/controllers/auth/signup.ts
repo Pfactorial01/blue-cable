@@ -18,7 +18,7 @@ const signup = async (req: Request, res: Response) => {
         return res.status(400).json({ message: "user already exists" });    
     }
     const passwordHash = await hash(password, 12);
-    await prisma.user.create({
+    const user = await prisma.user.create({
         data: {
             email,
             fullname,
@@ -26,7 +26,7 @@ const signup = async (req: Request, res: Response) => {
             role: admin === "true" ? "ADMIN" : "REGULAR"
         }
     })
-    return res.status(200).json({ message: "success" });
+    return res.status(200).json({ message: "success", userId: user.id });
 }
 
 export default signup
