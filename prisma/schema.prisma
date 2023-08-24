@@ -13,11 +13,12 @@ enum ROLE {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       String @id @default(cuid())
   email    String @unique @db.VarChar(255)
   password String @db.VarChar(255)
   fullname String @db.VarChar(255)
   role     ROLE   @default(REGULAR)
+  files    File[]
 }
 
 model session {
@@ -26,4 +27,14 @@ model session {
   expire DateTime @db.Timestamp(6)
 
   @@index([expire], map: "IDX_session_expire")
+}
+
+model File {
+  id     String @id @default(cuid())
+  name   String @db.VarChar(255)
+  key    String @db.VarChar(255)
+  type    String @db.VarChar(255)
+  safe   Boolean @default(true)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
