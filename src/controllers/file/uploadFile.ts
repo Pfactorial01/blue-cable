@@ -21,12 +21,14 @@ const uploadFile = async (req: Request, res: Response) => {
         if (existingFile) return res.status(400).json({ message: "File with this name already exists in this folder" })
         if (file) {
             await fileUpload(file, key)
+            const size = Math.round(file.size / 1024)
             const fileData = await prisma.file.create({
                 data: {
                     name: filename as string,
                     key: key,
                     userId,
                     type: file.mimetype,
+                    size
                 }
             })
             return res.status(200).json({ message: "File uploaded successfully", fileId: fileData.id});

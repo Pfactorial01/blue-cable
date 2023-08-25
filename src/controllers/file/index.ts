@@ -1,5 +1,6 @@
-import uploadFile from "./uploadFile"
+import uploadFile from "./uploadFile";
 import downloadFile from "./downloadFile";
+import streamFile from "./streamFile";
 
 
-export { uploadFile, downloadFile };
+export { uploadFile, downloadFile, streamFile };

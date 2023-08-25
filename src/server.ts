@@ -4,15 +4,19 @@ import connectPgSimple from 'connect-pg-simple';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import router from './routes/index';
+import cors from 'cors'
+import deleteUnsafeFiles from './cron';
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
 
-/*assuming an express app is declared here*/
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors({
+  origin: ['*']
+}));
 
 const pgStore = connectPgSimple(session)
 const cookieSecret = process.env.COOKIE_SECRET as string;
@@ -32,4 +36,4 @@ app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
 
-
+deleteUnsafeFiles.start();

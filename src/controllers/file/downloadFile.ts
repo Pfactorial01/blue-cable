@@ -8,7 +8,7 @@ const downloadFile = async (req: Request, res: Response) => {
     try {
         // @ts-ignore        
         const userId = req.session.userId
-        const fileId = req.query.fileId as string
+        const fileId = req.params.id as string
         if (!fileId) return res.status(400).json({ message: "fileId in query params is required" })
         const fileData = await prisma.file.findUnique({
             where: {

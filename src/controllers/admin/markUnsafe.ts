@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
+import { deleteFile } from '../../services/aws';
 
 const prisma = new PrismaClient()
 
@@ -16,18 +17,20 @@ const markUnsafe = async (req: Request, res: Response) => {
         })
         if (!file) return res.status(404).json({ message: "file not found"});
         if (!file.type.includes("image") && !file.type.includes("video") ) return res.status(400).json({ message: "Only Images and Videos can be marked as unsafe"})
-        if ( file.safe.includes(userId)) return res.status(400).json({ message: "You have already marked this file as unsafe"})
+        if ( file.markedby.includes(userId)) return res.status(400).json({ message: "You have already marked this file as unsafe"})
         const updatedFile = await prisma.file.update({
             data: {
-                safe: {
+                markedby: {
                     push: userId
-                }
+                },
+                safe: false
             },
             where: {
                 id: fileId
             }
         })
-        if (updatedFile.safe.length >= 3) {
+        if (updatedFile.markedby.length >= 3) {
+            await deleteFile(file.key)
             await prisma.file.delete({
                 where: {
                     id: fileId
