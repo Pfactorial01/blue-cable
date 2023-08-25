@@ -34,7 +34,9 @@ model File {
   name   String @db.VarChar(255)
   key    String @db.VarChar(255)
   type   String @db.VarChar(255)
-  safe   String[]
+  size   Int    @default(0)
+  markedby String[]
+  safe   Boolean @default(true)
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
