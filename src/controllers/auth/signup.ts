@@ -1,4 +1,4 @@
-import {hash, compare} from 'bcrypt';
+import {hash} from 'bcrypt';
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client'
 

@@ -37,3 +37,4 @@ app.listen(port, () => {
 });
 
 deleteUnsafeFiles.start();
+export default app

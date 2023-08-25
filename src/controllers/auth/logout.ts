@@ -15,7 +15,7 @@ const logout = async (req: Request, res: Response) => {
             }
         }
     })
-    if (!sessionData) return res.status(401).json({ message: "UnAuthorized" })
+    if (!sessionData) return res.status(401).json({ message: "Unauthorized" })
     await prisma.session.delete({
         where: {
             sid: sessionData.sid
