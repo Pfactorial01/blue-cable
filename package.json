@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "build": "npm i && npx tsc",
+    "build": "npm i && npx tsc && npx prisma generate",
     "start": "node dist/server.js",
     "dev": "nodemon src/server.ts",
     "test": "mocha dist --forceExit --timeout 50000"
