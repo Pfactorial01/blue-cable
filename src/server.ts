@@ -33,6 +33,6 @@ app.use(
 app.use("/api/v1", router);
 
 app.listen(3000, '0.0.0.0');
-
+console.log(`⚡️[server]: Server is running`)
 deleteUnsafeFiles.start();
 export default app
