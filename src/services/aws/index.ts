@@ -91,23 +91,41 @@ export const fileDownload = async (
     fileStream.pipe(res);
 };
 
-export async function createAWSStream(req: Request, res: Response, Key: string) {
-    const bucketParams = {
-        Bucket: awsBucket,
-        Key
-    }
-    const headObjectCommand = new HeadObjectCommand(bucketParams);
-    const headObject = await s3.send(headObjectCommand);
-    const maxLength = headObject.ContentLength as number;
-    const options = {
-    s3,
-    command: new GetObjectCommand(bucketParams),
-    maxLength,
-    byteRange: 1024 * 1024
-    };
-    const stream = new S3ReadStream(options);
-    return stream
-}
+export const createAWSStream = async (
+  req: Request,
+  res: Response,
+  filepath: string
+): Promise<void> => {
+  const options = {
+    Bucket: awsBucket,
+    Key: filepath,
+    Range: 'bytes=0-10024'
+  };  
+  res.attachment(filepath);
+  const command = new GetObjectCommand(options)
+  const file = await s3.send(command);
+  const fileStream = file.Body as Readable
+  fileStream.pipe(res);
+};
+
+// export async function createAWSStream(req: Request, res: Response, Key: string) {
+//     const bucketParams = {
+//         Bucket: awsBucket,
+//         Key,
+//         Range: 'bytes=0-1024'
+//     }
+//     const headObjectCommand = new HeadObjectCommand(bucketParams);
+//     const headObject = await s3.send(headObjectCommand);
+//     const maxLength = headObject.ContentLength as number;
+//     const options = {
+//     s3,
+//     command: new GetObjectCommand(bucketParams),
+//     maxLength,
+//     byteRange: 1024 * 1024
+//     };
+//     const stream = new S3ReadStream(options);
+//     return stream
+// }
 
 export const deleteFile = async (
   filepath: string
