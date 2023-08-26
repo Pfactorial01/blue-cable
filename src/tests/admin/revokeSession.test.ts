@@ -26,7 +26,7 @@ const nonExistingUserId = "cljsdurebuwu238bne2r"
 
 chai.use(chatHttp);
 
-describe("MarkUnsafe tests", () => {
+describe("RevokeSession tests", () => {
 
     before(async () => {
         try {

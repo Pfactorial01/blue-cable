@@ -17,7 +17,7 @@ const User = {
 
 chai.use(chatHttp);
 
-describe("Logout tests", () => {
+describe("Create Folder tests", () => {
 
     before(async () => {
         try {
