@@ -3,7 +3,7 @@ import chai from "chai";
 import chatHttp from "chai-http";
 import app from  "../../server";
 import { PrismaClient } from '@prisma/client';
-import {hash} from 'bcrypt';;
+import {hash} from 'bcrypt';
 
 const prisma = new PrismaClient()
 
