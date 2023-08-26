@@ -4,7 +4,7 @@ import { deleteFile } from './services/aws';
 
 const prisma = new PrismaClient()
 
-const deleteUnsafeFilesCron = cron.schedule("* * * * *", async () => {
+const deleteUnsafeFilesCron = cron.schedule("0 * * * *", async () => {
     const files = await prisma.file.findMany({
         where: {
             safe: false
