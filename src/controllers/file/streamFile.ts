@@ -21,7 +21,7 @@ const streamFile = async (req: Request, res: Response) => {
         if (!fileData.type.includes('video') && !fileData.type.includes('audio')) return res.status(400).json({ message: "Only audio and video can be streamed" })
         const { key, size} = fileData
         const CHUNK_SIZE = 10 ** 6
-        const range = req.headers.range || 0;
+        const range = req.headers.range || "0";
         const start = Number(range.replace(/\D/g, ""));
         const end = Math.min(start + CHUNK_SIZE, size - 1);
         const contentLength = end - start + 1;
