@@ -94,12 +94,14 @@ export const fileDownload = async (
 export const createAWSStream = async (
   req: Request,
   res: Response,
-  filepath: string
+  filepath: string,
+  start: number,
+  end: number
 ): Promise<void> => {
   const options = {
     Bucket: awsBucket,
     Key: filepath,
-    Range: 'bytes=0-10024'
+    Range: `bytes=${start}-${end}`
   };  
   res.attachment(filepath);
   const command = new GetObjectCommand(options)
