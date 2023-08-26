@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import session from 'express-session';
 import connectPgSimple from 'connect-pg-simple';
 import dotenv from 'dotenv';
@@ -23,7 +23,9 @@ const cookieSecret = process.env.COOKIE_SECRET as string;
 
 app.use(
   session({
-    store: new pgStore,
+    store: new pgStore({
+      conString: process.env.REMOTE_DATABASE_URL,
+    }),
     secret: cookieSecret,
     resave: false,
     saveUninitialized: false,
