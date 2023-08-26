@@ -10,7 +10,7 @@ import deleteUnsafeFiles from './cron';
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT as string;
+const port = process.env.PORT;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -32,7 +32,6 @@ app.use(
 
 app.use("/api/v1", router);
 
-app.listen(3000, '0.0.0.0');
-console.log(`⚡️[server]: Server is running`)
+app.listen(port, () => console.log("[server]: Server Started"));
 deleteUnsafeFiles.start();
 export default app
