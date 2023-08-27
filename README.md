@@ -17,7 +17,7 @@ npm run dev
 ```
 - Test:
 ```
-npm run tests
+npm run test
 ```
 
 # Running on Docker
