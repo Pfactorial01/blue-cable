@@ -103,31 +103,11 @@ export const createAWSStream = async (
     Key: filepath,
     Range: `bytes=${start}-${end}`
   };  
-  res.attachment(filepath);
   const command = new GetObjectCommand(options)
   const file = await s3.send(command);
   const fileStream = file.Body as Readable
   fileStream.pipe(res);
 };
-
-// export async function createAWSStream(req: Request, res: Response, Key: string) {
-//     const bucketParams = {
-//         Bucket: awsBucket,
-//         Key,
-//         Range: 'bytes=0-1024'
-//     }
-//     const headObjectCommand = new HeadObjectCommand(bucketParams);
-//     const headObject = await s3.send(headObjectCommand);
-//     const maxLength = headObject.ContentLength as number;
-//     const options = {
-//     s3,
-//     command: new GetObjectCommand(bucketParams),
-//     maxLength,
-//     byteRange: 1024 * 1024
-//     };
-//     const stream = new S3ReadStream(options);
-//     return stream
-// }
 
 export const deleteFile = async (
   filepath: string
