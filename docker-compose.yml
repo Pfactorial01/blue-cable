@@ -1,0 +1,28 @@
+version: '3'
+services:
+  pg_db:
+    image: postgres:14-alpine
+    restart: always
+    platform: linux/x86_64
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_volume:/var/lib/postgres
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: postgresuser
+      POSTGRES_DB: blue_cable_db
+
+
+  api:
+    build: .
+    ports: 
+      - 5000:5000
+    volumes:
+      - blue_cable_volume:/var/lib/blue_cable
+    depends_on:
+      - pg_db
+      
+volumes:
+  postgres_volume:
+  blue_cable_volume:
